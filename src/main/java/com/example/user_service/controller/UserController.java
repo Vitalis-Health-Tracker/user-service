@@ -13,14 +13,14 @@ public class UserController {
     @Autowired
     private UserServices userServices;
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable String id){
-        return userServices.getUserById(id);
-    }
-
     @GetMapping("/{email}")
     public User getUserByEmail(@PathVariable String email){
         return userServices.getUserByEmail(email);
+    }
+
+    @GetMapping("/retrieve-id/{email}")
+    public String getUserById(@PathVariable String email){
+        return userServices.getUserByEmail(email).getUId();
     }
 
     @PostMapping("/{email}")
