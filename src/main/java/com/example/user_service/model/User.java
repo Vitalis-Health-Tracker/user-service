@@ -15,13 +15,10 @@ public class User {
     private String uId;
     private String email;
     private String userName;
+    private Integer age;
     private float height;
     private float weight;
     private String gender;
     private double bmi;
-    private enum journey{
-        MUSCLE_GAIN,
-        WEIGHT_LOSS,
-        MAINTAIN
-    }
+    private String journey;
 }

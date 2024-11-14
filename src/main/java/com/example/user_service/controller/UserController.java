@@ -7,6 +7,8 @@ import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -40,5 +42,15 @@ public class UserController {
             return "User updated successfully";
         }
         return "User does not exist";
+    }
+
+    @GetMapping("/{userId}/get-details")
+    public User getUser(@PathVariable String userId){
+        return userServices.getUserById(userId);
+    }
+
+    @GetMapping("/get-all-ids")
+    public List<String> getAllUserIds(){
+        return userServices.getAllUserIds();
     }
 }
