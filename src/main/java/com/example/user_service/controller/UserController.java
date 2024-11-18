@@ -7,6 +7,8 @@ import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -16,6 +18,11 @@ public class UserController {
     @GetMapping("/{email}")
     public User getUserByEmail(@PathVariable String email){
         return userServices.getUserByEmail(email);
+    }
+
+    @GetMapping("/get-email/{userId}")
+    public String getEmail(@PathVariable String userId){
+        return userServices.getUserById(userId).getEmail();
     }
 
     @GetMapping("/retrieve-id/{email}")
@@ -33,12 +40,22 @@ public class UserController {
             return false;
     }
 
-    @PutMapping("/{email}")
-    public String updateAcc(@PathVariable String email, @RequestBody User user) throws UserDoesNotExistException {
-        if(userServices.getUserByEmail(email) != null){
-            userServices.updateUser(email, user);
+    @PutMapping("/{userId}")
+    public String updateAcc(@PathVariable String userId, @RequestBody User user) throws UserDoesNotExistException {
+        if(userServices.getUserById(userId) != null){
+            userServices.updateUser(userId, user);
             return "User updated successfully";
         }
         return "User does not exist";
+    }
+
+    @GetMapping("/{userId}/get-details")
+    public User getUser(@PathVariable String userId){
+        return userServices.getUserById(userId);
+    }
+
+    @GetMapping("/get-all-ids")
+    public List<String> getAllUserIds(){
+        return userServices.getAllUserIds();
     }
 }

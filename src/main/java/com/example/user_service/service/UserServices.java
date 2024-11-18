@@ -7,6 +7,8 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServices {
     @Autowired
@@ -33,6 +35,14 @@ public class UserServices {
         User oldUser = userRepo.findById(uId).orElse(null);
         if(oldUser != null)
         {
+            oldUser.setUserName(newUser.getUserName());
+            oldUser.setAge(newUser.getAge());
+            oldUser.setWeight(newUser.getWeight());
+            oldUser.setHeight(newUser.getHeight());
+            oldUser.setGender(newUser.getGender());
+            oldUser.setJourney(newUser.getJourney());
+            Float bmi = (newUser.getHeight() * newUser.getHeight()) / newUser.getWeight();
+            newUser.setBmi(bmi);
             userRepo.save(newUser);
             return newUser;
         }
@@ -40,5 +50,9 @@ public class UserServices {
         {
             throw new UserDoesNotExistException();
         }
+    }
+
+    public List<String> getAllUserIds(){
+        return userRepo.getUserId();
     }
 }
