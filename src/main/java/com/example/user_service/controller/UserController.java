@@ -20,6 +20,11 @@ public class UserController {
         return userServices.getUserByEmail(email);
     }
 
+    @GetMapping("/get-email/{userId}")
+    public String getEmail(@PathVariable String userId){
+        return userServices.getUserById(userId).getEmail();
+    }
+
     @GetMapping("/retrieve-id/{email}")
     public String getUserById(@PathVariable String email){
         return userServices.getUserByEmail(email).getUId();
