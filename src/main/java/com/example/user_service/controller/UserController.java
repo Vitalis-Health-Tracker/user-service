@@ -35,10 +35,10 @@ public class UserController {
             return false;
     }
 
-    @PutMapping("/{email}")
-    public String updateAcc(@PathVariable String email, @RequestBody User user) throws UserDoesNotExistException {
-        if(userServices.getUserByEmail(email) != null){
-            userServices.updateUser(email, user);
+    @PutMapping("/{userId}")
+    public String updateAcc(@PathVariable String userId, @RequestBody User user) throws UserDoesNotExistException {
+        if(userServices.getUserById(userId) != null){
+            userServices.updateUser(userId, user);
             return "User updated successfully";
         }
         return "User does not exist";
