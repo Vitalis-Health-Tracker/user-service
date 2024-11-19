@@ -41,7 +41,7 @@ public class UserServices {
             oldUser.setHeight(newUser.getHeight());
             oldUser.setGender(newUser.getGender());
             oldUser.setJourney(newUser.getJourney());
-            Float bmi = (newUser.getHeight() * newUser.getHeight()) / newUser.getWeight();
+            Float bmi = newUser.getWeight()/(newUser.getHeight() * newUser.getHeight());
             newUser.setBmi(bmi);
             userRepo.save(newUser);
             return newUser;
