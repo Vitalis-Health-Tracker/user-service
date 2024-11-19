@@ -58,4 +58,12 @@ public class UserController {
     public List<String> getAllUserIds(){
         return userServices.getAllUserIds();
     }
+
+    @DeleteMapping("/{userId}")
+    public String deleteAcc(@PathVariable String userId){
+        if(userServices.deleteUser(userId))
+            return "User deleted successfully";
+        else
+            return "User delete not successful";
+    }
 }

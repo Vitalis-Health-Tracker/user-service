@@ -52,6 +52,17 @@ public class UserServices {
         }
     }
 
+    public boolean deleteUser(String uId){
+        if(getUserById(uId) == null) {
+            userRepo.deleteById(uId);
+            if (getUserById(uId) != null) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public List<String> getAllUserIds(){
         return userRepo.getUserId();
     }
