@@ -6,6 +6,7 @@ import com.example.user_service.repository.UserRepo;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
@@ -53,14 +54,28 @@ public class UserServices {
     }
 
     public boolean deleteUser(String uId){
-        if(getUserById(uId) == null) {
+        User user = userRepo.findById(uId).orElse(null);
+        if(user != null) {
             userRepo.deleteById(uId);
-            if (getUserById(uId) != null) {
+            if (getUserById(uId) != null)
+            {
                 return false;
             }
-            return true;
+            if(deleteFromAuth(user.getEmail()))
+            {
+                return true;
+            }
         }
         return false;
+    }
+
+    private Boolean deleteFromAuth(String email)
+    {
+        RestClient restClient = RestClient.create();
+        return restClient.delete()
+                .uri("http://localhost:9090/auth/" + email)
+                .retrieve()
+                .body(Boolean.class);
     }
 
     public List<String> getAllUserIds(){
