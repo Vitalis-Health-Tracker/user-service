@@ -12,5 +12,5 @@ public interface UserRepo extends MongoRepository<User, String>{
     public User getUserByEmail(String email);
 
     @Query(value = "{}", fields = "{'_id': 1}")
-    public List<String> getUserId();
+    public List<String> getAllUId();
 }
