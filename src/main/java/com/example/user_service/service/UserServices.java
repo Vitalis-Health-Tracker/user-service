@@ -79,6 +79,7 @@ public class UserServices {
     }
 
     public List<String> getAllUserIds(){
-        return userRepo.getUserId();
+        List<User> users = userRepo.findAll();
+        return users.stream().map(User::getUId).toList();
     }
 }
